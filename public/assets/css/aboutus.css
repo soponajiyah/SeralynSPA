@@ -30,6 +30,7 @@ body::-webkit-scrollbar-thumb{
     background:var(--gold);
 }
 
+
 header{
     width:92%;
     height:85px;
@@ -126,6 +127,7 @@ nav a.active::after{
     color:var(--gold);
 }
 
+
 .overlay{
     width:100%;
     height:100%;
@@ -183,63 +185,50 @@ footer{
     grid-template-columns:repeat(4,1fr);
     gap:60px;
 }
-
 .footer-box{
     display:flex;
     flex-direction:column;
 }
-
 .footer-logo{
     width:230px;
     margin-bottom:2px;
 }
-
 .footer-box p{
     color:#d8d8d8;
     line-height:1.8;
 }
-
 .footer-social{
     display:flex;
     gap:20px;
     margin-top:25px;
     content: none;
 }
-
 .footer-social a{
     width:40px;
     height:40px;
     border-radius:50%;
     background:rgba(255,255,255,.05);
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     color:#d8d8d8;
     font-size:18px;
-
     margin-bottom: 0;
-
     transition:.4s;
 }
-
 .footer-social a:hover{
     background:var(--cream);
     color:#111;
     transform:translateY(-6px) !important;
 }
-
 .footer-social a{
     transform:none !important;
     margin-bottom:0;
 }
-
 .footer-box h3{
     color:var(--gold);
     margin-bottom:30px;
 }
-
 .footer-box a{
     color:#d8d8d8;
     text-decoration:none;
@@ -253,25 +242,20 @@ footer{
     background:rgba(255,255,255,.03);
     transition:.4s;
 }
-
 .footer-box a:hover{
     background:var(--cream);
     color:#111;
     transform:translateX(10px);
 }
-
 .footer-box a:hover::before{
     transform:scale(1.4);
 }
-
 .footer-box h3 ~ a::before{
     content:">";
     color:var(--gold);
     font-size:20px;
     transition:.4s;
 }
-
-
 .reveal{
     opacity:0;
     transform:translateY(80px);
@@ -279,13 +263,10 @@ footer{
         opacity 1s ease,
         transform 1s ease;
 }
-
 .reveal.active{
     opacity:1;
     transform:translateY(0);
 }
-
-
 .reveal-left{
     opacity:0;
     transform:translateX(-80px);
@@ -293,13 +274,10 @@ footer{
         opacity 1s ease,
         transform 1s ease;
 }
-
 .reveal-left.active{
     opacity:1;
     transform:translateX(0);
 }
-
-
 .reveal-right{
     opacity:0;
     transform:translateX(80px);
@@ -307,12 +285,10 @@ footer{
         opacity 1s ease,
         transform 1s ease;
 }
-
 .reveal-right.active{
     opacity:1;
     transform:translateX(0);
 }
-
 .reveal-zoom{
     opacity:0;
     transform:scale(.85);
@@ -320,7 +296,6 @@ footer{
         opacity 1s ease,
         transform 1s ease;
 }
-
 .reveal-zoom.active{
     opacity:1;
     transform:scale(1);
@@ -422,7 +397,6 @@ footer{
     }
 }
 
-/* WhatsApp Floating Button */
 .wa-btn{
     position:fixed;
     bottom:35px;

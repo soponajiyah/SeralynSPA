@@ -22,20 +22,7 @@
             <span></span>
             <span></span>
         </div>
-        <header>
-            <div class="logo"><img src="{{ asset('assets/img/LOGO.jpg') }}" alt="Seralyn Spa"></div>
-            <nav>
-                <a href="{{ url('/') }}">Home</a>
-                <a href="{{ url('/aboutus') }}">About Us</a>
-                <a href="{{ url('/treatments') }}">Treatments</a>
-                <a href="{{ url('/gallery') }}">Gallery</a>
-                <a href="#" class="reservation-btn">Reservation</a>
-            </nav>
-            <div class="account">
-                <a href="#">Login</a>
-                <a href="#">Sign Up</a>
-            </div>
-        </header>
+        @include('components.header')
 
         <section class="treatment-hero">
             <div class="hero-overlay"></div>
@@ -45,27 +32,6 @@
                 <p>Discover thoughtfully curated treatments designed to restore your body, refresh your senses, and create moments of complete serenity.</p>
 
                 <div class="hero-line"></div>
-            </div>
-        </section>
-        <section class="treatment-intro reveal">
-            <div class="section-title">
-                <span>THE SERALYN EXPERIENCE</span>
-                <h2>A Treatment for<br>Every Kind of You</h2>
-                <p>From soothing massage rituals to luxurious facial therapies and internationally inspired experiences, every Seralyn treatment is created to help you slow down, reconnect, and enjoy a moment entirely for yourself.</p>
-            </div>
-            <div class="treatment-stat">
-                <div class="stat-item">
-                    <strong>18</strong>
-                    <span>Signature Treatments</span>
-                </div>
-                <div class="stat-item">
-                    <strong>4</strong>
-                    <span>Treatment Collections</span>
-                </div>
-                <div class="stat-item">
-                    <strong>60–150</strong>
-                    <span>Minutes of Serenity</span>
-                </div>
             </div>
         </section>
         <section class="treatment-menu">
@@ -81,7 +47,29 @@
                 <button class="filter-btn" data-filter="body">Body Ritual</button>
                 <button class="filter-btn" data-filter="international">International</button>
             </div>
-            <div class="treatment-category reveal" data-category="massage">
+            <div class="treatment-search reveal">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input
+                    type="text"
+                    id="treatmentSearch"
+                    placeholder="Search your treatment..."
+                    autocomplete="off"
+                    aria-label="Search treatments"
+                >
+                <button
+                    type="button"
+                    id="clearSearch"
+                    aria-label="Clear search"
+                    title="Clear search"
+                    hidden
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <p id="noTreatmentResults" class="no-results" hidden>
+                No treatments found. Please try another keyword.
+            </p>
+            <div class="treatment-category reveal" id="massage" data-category="massage">
                 <div class="category-heading">
                     <div>
                         <span>COLLECTION 01</span>
@@ -100,10 +88,10 @@
                             <h3>Serenity Head & Shoulder Escape</h3>
                             <div class="treatment-meta">
                                 <span><i class="fa-regular fa-clock"></i>60 Min</span>
-                                <strong>Rp290.000</strong>
+                                <strong>Rp300.000</strong>
                             </div>
                             <p>A calming head, neck, and shoulder ritual designed to release everyday tension and create a sense of lightness.</p>
-                            <a href="detail-treatment.html?id=head-shoulder" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=head-shoulder" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -119,7 +107,7 @@
                                 <strong>Rp260.000</strong>
                             </div>
                             <p>A soothing foot reflexology experience created to ease tired feet and restore a feeling of balance.</p>
-                            <a href="detail-treatment.html?id=foot-reflexology" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=foot-reflexology" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -135,7 +123,7 @@
                                 <strong>Rp260.000</strong>
                             </div>
                             <p>A delicate hand ritual combining exfoliation, massage, hydration, and calming lavender aromatherapy.</p>
-                            <a href="detail-treatment.html?id=lavender-hand" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=lavender-hand" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -147,11 +135,11 @@
                             <span class="treatment-tag">MASSAGE</span>
                             <h3>Golden Jasmine Relaxation</h3>
                             <div class="treatment-meta">
-                                <span><i class="fa-regular fa-clock"></i>60 Min</span>
-                                <strong>Rp300.000</strong>
+                                <span><i class="fa-regular fa-clock"></i>40 Min</span>
+                                <strong>Rp330.000</strong>
                             </div>
                             <p>A full-body relaxation ritual infused with jasmine aromatherapy and gentle Balinese-inspired massage techniques.</p>
-                            <a href="detail-treatment.html?id=golden-jasmine" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=golden-jasmine" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -167,7 +155,7 @@
                                 <strong>Rp420.000</strong>
                             </div>
                             <p>A warm candle massage ritual designed to release muscle tension while creating a deeply soothing and luxurious experience.</p>
-                            <a href="detail-treatment.html?id=warm-candle" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=warm-candle" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -183,7 +171,7 @@
                                 <strong>Rp380.000</strong>
                             </div>
                             <p>A soothing herbal compress and massage ritual created to release body tension and restore a sense of relaxation.</p>
-                            <a href="detail-treatment.html?id=herbal-compress" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=herbal-compress" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -199,7 +187,7 @@
                                 <strong>Rp480.000</strong>
                             </div>
                             <p>Heated volcanic stones meet relaxing massage techniques to create a deeply grounding spa ritual.</p>
-                            <a href="detail-treatment.html?id=hot-stone" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=hot-stone" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -215,14 +203,14 @@
                                 <strong>Rp550.000</strong>
                             </div>
                             <p>Warm bamboo rolling techniques meet full-body massage for a unique and immersive relaxation experience.</p>
-                            <a href="detail-treatment.html?id=bamboo" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=bamboo" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
 
                 </div>
             </div>
 
-            <div class="treatment-category reveal" data-category="facial">
+            <div class="treatment-category reveal" id="facial" data-category="facial">
                 <div class="category-heading">
                     <div>
                         <span>COLLECTION 02</span>
@@ -244,7 +232,7 @@
                                 <strong>Rp650.000</strong>
                             </div>
                             <p>A premium facial ritual combining cleansing, exfoliation, serum infusion, and a brightening mask.</p>
-                            <a href="detail-treatment.html?id=diamond-glow" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=diamond-glow" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -260,7 +248,7 @@
                                 <strong>Rp720.000</strong>
                             </div>
                             <p>A collagen-focused facial ritual designed around hydration, nourishment, and a lifting massage experience.</p>
-                            <a href="detail-treatment.html?id=collagen-lift" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=collagen-lift" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -276,14 +264,14 @@
                                 <strong>Rp780.000</strong>
                             </div>
                             <p>An exclusive hydration ritual with premium active ingredients for a refreshed and luminous appearance.</p>
-                            <a href="detail-treatment.html?id=platinum-youth" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=platinum-youth" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
 
                 </div>
             </div>
 
-            <div class="treatment-category reveal" data-category="body">
+            <div class="treatment-category reveal" id="body" data-category="body">
                 <div class="category-heading">
                     <div>
                         <span>COLLECTION 03</span>
@@ -305,7 +293,7 @@
                                 <strong>Rp490.000</strong>
                             </div>
                             <p>A coconut-based body polish designed to gently exfoliate and nourish the skin.</p>
-                            <a href="detail-treatment.html?id=coconut-polish" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=coconut-polish" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -321,7 +309,7 @@
                                 <strong>Rp520.000</strong>
                             </div>
                             <p>A mineral-rich sea salt exfoliation ritual for a refreshed and renewed body experience.</p>
-                            <a href="detail-treatment.html?id=sea-salt" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=sea-salt" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -337,7 +325,7 @@
                                 <strong>Rp620.000</strong>
                             </div>
                             <p>A mineral clay body ritual combining cleansing, wrapping, and hydration.</p>
-                            <a href="detail-treatment.html?id=golden-clay" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=golden-clay" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -353,13 +341,13 @@
                                 <strong>Rp1.250.000</strong>
                             </div>
                             <p>A complete premium spa ceremony combining massage, body exfoliation, mask, milk bath, and refreshing wellness rituals.</p>
-                            <a href="detail-treatment.html?id=milk-wrap" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=milk-wrap" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                 </div>
             </div>
 
-            <div class="treatment-category international-category reveal" data-category="international">
+            <div class="treatment-category international-category reveal" id="international" data-category="international">
                 <div class="category-heading">
                     <div>
                         <span>COLLECTION 04</span>
@@ -382,7 +370,7 @@
                                 <strong>Rp1.650.000</strong>
                             </div>
                             <p>An immersive Japanese-inspired ritual combining head spa therapy, body massage, scalp care, and Sakura-inspired relaxation.</p>
-                            <a href="detail-treatment.html?id=japanese-sakura" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=japanese-sakura" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -399,7 +387,7 @@
                                 <strong>Rp1.750.000</strong>
                             </div>
                             <p>A premium Korean-inspired scalp and relaxation ritual featuring ginseng, scalp care, massage, and warm steam therapy.</p>
-                            <a href="detail-treatment.html?id=korean-ginseng" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=korean-ginseng" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                     <article class="treatment-card">
@@ -416,7 +404,7 @@
                                 <strong>Rp1.850.000</strong>
                             </div>
                             <p>A Thai-inspired wellness journey combining massage, gentle assisted stretching, pressure point techniques, and herbal rituals.</p>
-                            <a href="detail-treatment.html?id=thai-harmony" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="{{ url('/detail-treatment') }}?id=thai-harmony" class="detail-btn">Explore Treatment <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </article>
                 </div>
@@ -431,32 +419,29 @@
             <a href="reservasi.html" class="cta-button">Reserve Your Experience <i class="fa-solid fa-arrow-right"></i></a>
         </section>
 
-
-        <footer>
-            <div class="footer-box">
-                <img src="{{ asset('assets/img/LOGO.jpg') }}" class="footer-logo">
-                <p>Premium Spa & Wellness Experience with serenity, beauty, and comfort.</p>
-                <div class="footer-social">
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <section class="treatment-intro reveal">
+            <div class="section-title">
+                <span>THE SERALYN EXPERIENCE</span>
+                <h2>A Treatment for<br>Every Kind of You</h2>
+                <p>From soothing massage rituals to luxurious facial therapies and internationally inspired experiences, every Seralyn treatment is created to help you slow down, reconnect, and enjoy a moment entirely for yourself.</p>
+            </div>
+            <div class="treatment-stat">
+                <div class="stat-item">
+                    <strong>18</strong>
+                    <span>Signature Treatments</span>
+                </div>
+                <div class="stat-item">
+                    <strong>4</strong>
+                    <span>Treatment Collections</span>
+                </div>
+                <div class="stat-item">
+                    <strong>60–150</strong>
+                    <span>Minutes of Serenity</span>
                 </div>
             </div>
-            <div class="footer-box">
-                <h3>Menu</h3>
-                <a href="index.html">Home</a>
-                <a href="gallery.html">Gallery</a>
-                <a href="treatment.html">Treatment</a>
-                <a href="aboutus.html">About Us</a>
-            </div>
-            <div class="footer-box">
-                <h3>Contact</h3>
-                <a href="#">WhatsApp</a>
-                <a href="#">Email</a>
-                <a href="#">Address</a>
-            </div>
-        </footer>
+        </section>
+
+        @include('components.footer')
 
 
         <a href="#" class="wa-btn"><i class="fa-brands fa-whatsapp"></i></a>

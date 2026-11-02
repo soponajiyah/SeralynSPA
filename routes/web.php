@@ -17,3 +17,7 @@ Route::get('/treatments', function () {
 Route::get('/gallery', function () {
     return view('gallery');
 });
+
+Route::get('/detail-treatment', function () {
+    return view('detail-treatment');
+});

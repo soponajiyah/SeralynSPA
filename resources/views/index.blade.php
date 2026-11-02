@@ -22,20 +22,7 @@
             <span></span>
             <span></span>
         </div>
-        <header>
-            <div class="logo"><img src="{{ asset('assets/img/LOGO.jpg') }}" alt="Seralyn Spa"></div>
-            <nav>
-                <a href="{{ url('/') }}">Home</a>
-                <a href="{{ url('/aboutus') }}">About Us</a>
-                <a href="{{ url('/treatments') }}">Treatments</a>
-                <a href="{{ url('/gallery') }}">Gallery</a>
-                <a href="#" class="reservation-btn">Reservation</a>
-            </nav>
-            <div class="account">
-                <a href="#">Login</a>
-                <a href="#">Sign Up</a>
-            </div>
-        </header>
+        @include('components.header')
 
         <section class="hero">
             <div class="overlay"></div>
@@ -63,7 +50,7 @@
                     <img src="{{ asset('assets/img/category1(serenity massage).jpg') }}">
                     <div class="category-overlay">
                         <h3>SERENITY MASSAGE</h3>
-                        <a href="treatment.html#massage" class="filter-btn" data-filter="massage">
+                        <a href="{{ url('/treatments') }}#massage" class="filter-btn" data-filter="massage">
                             View Details
                             <i class="fa-solid fa-arrow-right"></i>
                         </a>
@@ -73,7 +60,7 @@
                     <img src="{{ asset('assets/img/category2(facial).jpg') }}">
                     <div class="category-overlay">
                         <h3>LUXURY FACIAL & BEAUTY THERAPY</h3>
-                        <a href="treatment.html#facial" class="filter-btn" data-filter="facial">
+                        <a href="{{ url('/treatments') }}#facial" class="filter-btn" data-filter="facial">
                             View Details
                             <i class="fa-solid fa-arrow-right"></i>
                         </a>
@@ -83,7 +70,7 @@
                     <img src="{{ asset('assets/img/category3(body rituals).jpg') }}">
                     <div class="category-overlay">
                         <h3>BODY RITUALS</h3>
-                        <a href="treatment.html#body" class="filter-btn" data-filter="body">
+                        <a href="{{ url('/treatments') }}#body" class="filter-btn" data-filter="body">
                             View Details
                             <i class="fa-solid fa-arrow-right"></i>
                         </a>
@@ -93,7 +80,7 @@
                     <img src="{{ asset('assets/img/category4 (international).jpg') }}">
                     <div class="category-overlay">
                         <h3>INTERNATIONAL TREATMENTS</h3>
-                        <a href="treatment.html#international" class="filter-btn" data-filter="international">
+                        <a href="{{ url('/treatments') }}#international" class="filter-btn" data-filter="international">
                             View Details
                             <i class="fa-solid fa-arrow-right"></i>
                         </a>
@@ -115,31 +102,7 @@
             </div>
         </section>
 
-        <footer>
-            <div class="footer-box">
-                <img src="{{ asset('assets/img/LOGO.jpg') }}" class="footer-logo">
-                <p>Premium Spa & Wellness Experience with serenity, beauty, and comfort.</p>
-                <div class="footer-social">
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                </div>
-            </div>
-            <div class="footer-box">
-                <h3>Menu</h3>
-                <a href="index.html">Home</a>
-                <a href="gallery.html">Gallery</a>
-                <a href="treatment.html">Treatment</a>
-                <a href="aboutus.html">About Us</a>
-            </div>
-            <div class="footer-box">
-                <h3>Contact</h3>
-                <a href="#">WhatsApp</a>
-                <a href="#">Email</a>
-                <a href="#">Address</a>
-            </div>
-        </footer>
+        @include('components.footer')
 
         <a href="https://wa.me/628xxxxxxxxxx" class="wa-btn" target="_blank" title="Chat with us on WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>

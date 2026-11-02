@@ -23,20 +23,7 @@
             <span></span>
             <span></span>
         </div>
-        <header>
-            <div class="logo"><img src="{{ asset('assets/img/LOGO.jpg') }}" alt="Seralyn Spa"></div>
-            <nav>
-                <a href="{{ url('/') }}">Home</a>
-                <a href="{{ url('/aboutus') }}">About Us</a>
-                <a href="{{ url('/treatments') }}">Treatments</a>
-                <a href="{{ url('/gallery') }}">Gallery</a>
-                <a href="#" class="reservation-btn">Reservation</a>
-            </nav>
-            <div class="account">
-                <a href="#">Login</a>
-                <a href="#">Sign Up</a>
-            </div>
-        </header>
+        @include('components.header')
 
 
         <section class="hero">
@@ -121,31 +108,7 @@
             </h2>
         </section>
 
-        <footer>
-            <div class="footer-box">
-                <img src="{{ asset('assets/img/LOGO.jpg') }}" class="footer-logo">
-                <p>Premium Spa & Wellness Experience with serenity, beauty, and comfort.</p>
-                <div class="footer-social">
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                </div>
-            </div>
-            <div class="footer-box">
-                <h3>Menu</h3>
-                <a href="index.html">Home</a>
-                <a href="gallery.html">Gallery</a>
-                <a href="treatment.html">Treatment</a>
-                <a href="aboutus.html">About Us</a>
-            </div>
-            <div class="footer-box">
-                <h3>Contact</h3>
-                <a href="#">WhatsApp</a>
-                <a href="#">Email</a>
-                <a href="#">Address</a>
-            </div>
-        </footer>
+        @include('components.footer')
 
         <a href="https://wa.me/628xxxxxxxxxx" class="wa-btn" target="_blank" title="Chat with us on WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>
