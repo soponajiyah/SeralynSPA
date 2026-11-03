@@ -1499,6 +1499,95 @@ $treatmentImage = asset('assets/img/' . rawurlencode($treatment['image']));
 
     <section class="content-section">
 
+        <div class="duration-card">
+
+            <div class="duration-info">
+
+                <span>PERSONALIZE YOUR EXPERIENCE</span>
+
+                <h3>Need More Time?</h3>
+
+                <p>
+                    Extend your treatment duration to enjoy a longer
+                    relaxation experience. Additional time is available
+                    at an extra charge of Rp20.000 per 10 minute.
+                </p>
+
+                <div class="extra-price">
+                    + Rp20.000 / 10 minute
+                </div>
+
+            </div>
+
+            <div class="duration-control">
+
+                <label for="extraMinutes">
+                    Add Extra Duration
+                </label>
+
+                <div class="duration-input">
+
+                    <button type="button" id="minusBtn">
+                        −
+                    </button>
+
+                    <input
+                        type="number"
+                        id="extraMinutes"
+                        value="0"
+                        min="0"
+                        max="60"
+                    >
+
+                    <button type="button" id="plusBtn">
+                        +
+                    </button>
+
+                </div>
+
+                <div class="duration-summary">
+
+                    <div>
+                        <span>Original Duration</span>
+
+                        <strong>
+                            {{ $treatment['duration'] }} Min
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Additional Duration</span>
+
+                        <strong id="displayMinutes">0 Min</strong>
+                    </div>
+
+                    <div>
+                        <span>Additional Cost</span>
+
+                        <strong id="displayExtraPrice">Rp0</strong>
+                    </div>
+
+                    <div class="total">
+
+                        <span>Estimated Total</span>
+
+                        <strong id="displayTotal">
+                            Rp{{ number_format($treatment['price'], 0, ',', '.') }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="content-section">
+
         <div class="section-heading">
 
             <span>THE SERALYN EXPERIENCE</span>
@@ -1645,94 +1734,6 @@ $treatmentImage = asset('assets/img/' . rawurlencode($treatment['image']));
                 </div>
 
             @endforeach
-
-        </div>
-
-    </section>
-
-    <section class="content-section">
-
-        <div class="duration-card">
-
-            <div class="duration-info">
-
-                <span>PERSONALIZE YOUR EXPERIENCE</span>
-
-                <h3>Need More Time?</h3>
-
-                <p>
-                    Extend your treatment duration to enjoy a longer
-                    relaxation experience. Additional time is available
-                    at an extra charge of Rp20.000 per 10 minute.
-                </p>
-
-                <div class="extra-price">
-                    + Rp20.000 / 10 minute
-                </div>
-
-            </div>
-
-            <div class="duration-control">
-
-                <label for="extraMinutes">
-                    Add Extra Duration
-                </label>
-
-                <div class="duration-input">
-
-                    <button type="button" id="minusBtn">
-                        −
-                    </button>
-
-                    <input
-                        type="number"
-                        id="extraMinutes"
-                        value="0"
-                        min="0"
-                        max="60"
-                    >
-
-                    <button type="button" id="plusBtn">
-                        +
-                    </button>
-
-                </div>
-
-                <div class="duration-summary">
-
-                    <div>
-                        <span>Original Duration</span>
-
-                        <strong>
-                            {{ $treatment['duration'] }} Min
-                        </strong>
-                    </div>
-
-                    <div>
-                        <span>Additional Duration</span>
-
-                        <strong id="displayMinutes">0 Min</strong>
-                    </div>
-
-                    <div>
-                        <span>Additional Cost</span>
-
-                        <strong id="displayExtraPrice">Rp0</strong>
-                    </div>
-
-                    <div class="total">
-
-                        <span>Estimated Total</span>
-
-                        <strong id="displayTotal">
-                            Rp{{ number_format($treatment['price'], 0, ',', '.') }}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </div>
 
         </div>
 

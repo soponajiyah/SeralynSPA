@@ -1,6 +1,6 @@
 <footer>
     <div class="footer-box">
-        <img src="{{ asset('assets/img/LOGO.jpg') }}" class="footer-logo" alt="Seralyn Spa">
+        <img src="{{ asset('assets/img/LOGO.png') }}" class="footer-logo" alt="Seralyn Spa">
         <p>Premium Spa &amp; Wellness Experience with serenity, beauty, and comfort.</p>
 
         <div class="footer-social">

@@ -9,6 +9,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
         <link rel="stylesheet" href="{{ asset('assets/css/treatment.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/responsive-pages.css') }}">
     </head>
 
 
@@ -364,7 +366,7 @@
                         </div>
                         <div class="treatment-info">
                             <span class="treatment-tag">INTERNATIONAL</span>
-                            <h3>Japanese Sakura Head Spa Ritual</h3>
+                            <h3>Sakura Head Spa Ritual</h3>
                             <div class="treatment-meta">
                                 <span><i class="fa-regular fa-clock"></i>150 Min</span>
                                 <strong>Rp1.650.000</strong>
@@ -381,7 +383,7 @@
                         </div>
                         <div class="treatment-info">
                             <span class="treatment-tag">INTERNATIONAL</span>
-                            <h3>Korean Ginseng Scalp Rejuvenation</h3>
+                            <h3>Ginseng Scalp Rejuvenation</h3>
                             <div class="treatment-meta">
                                 <span><i class="fa-regular fa-clock"></i>150 Min</span>
                                 <strong>Rp1.750.000</strong>
@@ -398,7 +400,7 @@
                         </div>
                         <div class="treatment-info">
                             <span class="treatment-tag">INTERNATIONAL</span>
-                            <h3>Royal Thai Harmony Massage</h3>
+                            <h3>Royal Harmony Massage</h3>
                             <div class="treatment-meta">
                                 <span><i class="fa-regular fa-clock"></i>150 Min</span>
                                 <strong>Rp1.850.000</strong>

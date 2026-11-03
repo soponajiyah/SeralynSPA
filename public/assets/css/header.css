@@ -1,0 +1,331 @@
+
+.seralyn-header {
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+
+    width: 85%;
+    min-height: 1px;
+    padding: 0 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(78, 63, 46, 0.226);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.486);
+    border-radius: 55px;
+}
+
+.seralyn-header .logo img {
+    display: block;
+    width: 130px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.seralyn-header .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    padding: 10px 25px;
+    border-radius: 50px;
+
+    background: rgba(88, 53, 34, 0.247);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.seralyn-header .desktop-nav a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 30px;
+
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.seralyn-header .desktop-nav a:hover,
+.seralyn-header .desktop-nav a.active {
+    color: #d4af37;
+}
+
+.seralyn-header .desktop-nav a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: #d4af37;
+    border-radius: 10px;
+}
+
+.seralyn-header .account {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.seralyn-header .account a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.seralyn-header .account a:hover {
+    color: #d4af37;
+}
+
+.mobile-menu-btn {
+    display: none;
+    width: 44px;
+    height: 44px;
+
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: 21px;
+
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+
+    cursor: pointer;
+}
+
+/* Overlay */
+.mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+
+    background: rgba(24, 24, 24, 0.42);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.35s ease;
+}
+
+.mobile-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1101;
+
+    width: min(340px, 85%);
+    height: 100vh;
+    height: 100dvh;
+
+    padding: 35px 28px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: rgba(32, 30, 27, 0.726);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: -15px 0 45px rgba(0, 0, 0, 0.18);
+
+    transform: translateX(105%);
+    visibility: hidden;
+    transition: transform 0.4s ease, visibility 0.4s ease;
+}
+
+.mobile-drawer.open {
+    transform: translateX(0);
+    visibility: visible;
+}
+
+.drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.drawer-title {
+    color: #d3bb6e;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+}
+
+.drawer-close {
+    width: 40px;
+    height: 40px;
+
+    color: white;
+    font-size: 20px;
+
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+
+    cursor: pointer;
+}
+
+.drawer-subtitle {
+    margin: 8px 0 35px;
+    color: rgba(255, 255, 255, 0.842);
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.drawer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.drawer-links a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 10px 17px;
+
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+
+    border-radius: 30px;
+    transition: 0.3s ease;
+}
+
+.drawer-links a i {
+    width: 20px;
+    color: #eee4c4;
+    text-align: center;
+}
+
+.drawer-links a:hover,
+.drawer-links a.active {
+    color: #f1e9d1;
+    background: rgba(212, 175, 55, 0.13);
+}
+
+.drawer-reservation {
+    margin-top: 10px;
+    border: 1px solid rgba(207, 182, 100, 0.4);
+}
+
+.drawer-account {
+    display: flex;
+    gap: 12px;
+    margin-top: 35px;
+}
+
+.drawer-account a {
+    flex: 1;
+    padding: 12px 8px;
+
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    transition: 0.3s ease;
+}
+
+.drawer-account a:last-child {
+    color: #0f0d0b;
+    background: #d4af37;
+    border-color: #d4af37;
+}
+
+.drawer-account a:hover {
+    opacity: 0.8;
+}
+
+.drawer-footer {
+    margin-top: auto;
+    padding-top: 25px;
+
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.reservation-btn{
+    padding:0 22px;
+    min-height:42px;
+    border:1px solid rgba(212,175,55,.8);
+    border-radius:30px;
+    background:rgba(193,155,30,.12);
+}
+.reservation-btn:hover{
+    background:rgba(212,175,55,.25);
+}
+.reservation-btn::after{
+    display:none;
+}
+
+/* Tablet dan HP */
+@media (max-width: 1000px) {
+    .seralyn-header {
+        width: 94%;
+        min-height: 72px;
+        padding: 0 22px;
+    }
+
+    .seralyn-header .desktop-nav,
+    .seralyn-header .account {
+        display: none;
+    }
+
+    .seralyn-header .logo img {
+        width: 145px;
+        height: auto;
+    }
+
+    .mobile-menu-btn {
+        display: flex;
+    }
+}
+
+/* HP kecil */
+@media (max-width: 480px) {
+    .seralyn-header {
+        top: 12px;
+        min-height: 65px;
+        padding: 0 17px;
+    }
+
+    .seralyn-header .logo img {
+        width: 125px;
+    }
+
+    .mobile-menu-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .mobile-drawer {
+        padding: 28px 22px;
+    }
+}

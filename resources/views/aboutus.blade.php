@@ -10,10 +10,12 @@
         <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
         <link rel="stylesheet" href="{{ asset('assets/css/aboutus.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/responsive-pages.css') }}">
     </head>
 
 
-    <body>
+    <body class="about-page">
         <div class="page-transition"></div>
         <div class="particles">
             <span></span>
