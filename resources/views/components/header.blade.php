@@ -8,9 +8,9 @@
 
     <nav class="desktop-nav" aria-label="Main navigation">
         <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a>
+        <a href="{{ url('/gallery') }}" class="{{ request()->is('gallery') ? 'active' : '' }}">Gallery</a>
         <a href="{{ url('/aboutus') }}" class="{{ request()->is('aboutus') ? 'active' : '' }}">About Us</a>
         <a href="{{ url('/treatments') }}" class="{{ request()->is('treatments') ? 'active' : '' }}">Treatments</a>
-        <a href="{{ url('/gallery') }}" class="{{ request()->is('gallery') ? 'active' : '' }}">Gallery</a>
         <a href="{{ url('/reservation') }}" class="reservation-btn">Reservation</a>
     </nav>
 
