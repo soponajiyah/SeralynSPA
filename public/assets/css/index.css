@@ -103,10 +103,10 @@ body::-webkit-scrollbar-thumb{
 }
 .hero-right::before{
     content:"";
-    width:500px;
-    height:500px;
+    width:380px;
+    height:380px;
     background:radial-gradient(
-        rgba(212,175,55,.35),
+        rgba(212, 175, 55, 0.253),
         transparent
     );
     position:absolute;
@@ -114,8 +114,8 @@ body::-webkit-scrollbar-thumb{
     z-index:-1;
 }
 .hero-right img{
-    width:500px;
-    height:470px;
+    width:350px;
+    height:350px;
     object-fit:cover;
     border-radius:50%;
     border:5px solid rgba(212,175,55,.7);
@@ -214,7 +214,7 @@ body.loaded .hero{
     color:white;
 }
 .category-overlay h3{
-    font-size:30px;
+    font-size:15px;
     font-family:'Cormorant Garamond';
     margin-bottom:20px;
 }

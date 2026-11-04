@@ -1419,15 +1419,10 @@ $treatmentImage = asset('assets/img/' . rawurlencode($treatment['image']));
 </section>
 
 <div class="back-wrapper">
-
     <a href="{{ $backUrl }}" class="back-btn">
-
-        <i class="fa-solid fa-arrow-left"></i>
-
+        <i class=>⮜</i>
         Back to Treatments
-
     </a>
-
 </div>
 
 <main class="detail-container">

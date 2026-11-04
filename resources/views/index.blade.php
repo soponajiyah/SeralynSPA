@@ -33,7 +33,9 @@
                     <span>Luxury Spa & Wellness Experience</span>
                     <img src="{{ asset('assets/img/seralynteks-logo.jpg') }}" alt="Seralyn">
                     <p>Serenity Meets Your Time</p>
-                    <button>Reserve Now</button>
+                    <a href="{{ url('/reservation') }}" class="reserve-btn">
+                        <button type="button">Reserve Now</button>
+                    </a>
                 </div>
                 <div class="hero-right">
                     <img src="{{ asset('assets/img/hero.jpg') }}" alt="Spa">
@@ -43,7 +45,7 @@
 
         <section class="categories reveal">
             <div class="section-title">
-                <span>Explore Our Treatments</span>
+                <span>Explore Our Collection of Treatments</span>
                 <h2>Find Your Perfect Serenity</h2>
                 <p>Discover our carefully curated spa experiences designed to relax, restore, and rejuvenate your body and soul.</p>
             </div>
@@ -54,7 +56,7 @@
                         <h3>SERENITY MASSAGE</h3>
                         <a href="{{ url('/treatments') }}#massage" class="filter-btn" data-filter="massage">
                             View Details
-                            <i class="fa-solid fa-arrow-right"></i>
+                            <i class=>⮞</i>
                         </a>
                     </div>
                 </div>
@@ -64,7 +66,7 @@
                         <h3>LUXURY FACIAL & BEAUTY THERAPY</h3>
                         <a href="{{ url('/treatments') }}#facial" class="filter-btn" data-filter="facial">
                             View Details
-                            <i class="fa-solid fa-arrow-right"></i>
+                            <i class=>⮞</i>
                         </a>
                     </div>
                 </div>
@@ -74,7 +76,7 @@
                         <h3>BODY RITUALS</h3>
                         <a href="{{ url('/treatments') }}#body" class="filter-btn" data-filter="body">
                             View Details
-                            <i class="fa-solid fa-arrow-right"></i>
+                            <i class=>⮞</i>
                         </a>
                     </div>
                 </div>
@@ -84,7 +86,7 @@
                         <h3>INTERNATIONAL TREATMENTS</h3>
                         <a href="{{ url('/treatments') }}#international" class="filter-btn" data-filter="international">
                             View Details
-                            <i class="fa-solid fa-arrow-right"></i>
+                            <i class=>⮞</i>
                         </a>
                     </div>
                 </div>

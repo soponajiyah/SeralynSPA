@@ -215,7 +215,7 @@ footer{
     position:absolute;
     bottom:-100px;
     border-radius:50%;
-    background:rgba(212, 183, 55, 0.35);
+    background:rgba(218, 207, 54, 0.466);
     backdrop-filter:blur(3px);
     animation:floatParticle linear infinite;
 }

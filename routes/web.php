@@ -21,3 +21,11 @@ Route::get('/gallery', function () {
 Route::get('/detail-treatment', function () {
     return view('detail-treatment');
 });
+
+Route::get('/reservation', function () {
+    return view('reservation');
+})->name('reservation');
+
+Route::get('/account', function () {
+    return view('auth');
+});

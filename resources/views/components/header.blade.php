@@ -11,12 +11,11 @@
         <a href="{{ url('/aboutus') }}" class="{{ request()->is('aboutus') ? 'active' : '' }}">About Us</a>
         <a href="{{ url('/treatments') }}" class="{{ request()->is('treatments') ? 'active' : '' }}">Treatments</a>
         <a href="{{ url('/gallery') }}" class="{{ request()->is('gallery') ? 'active' : '' }}">Gallery</a>
-        <a href="#" class="reservation-btn">Reservation</a>
+        <a href="{{ url('/reservation') }}" class="reservation-btn">Reservation</a>
     </nav>
 
     <div class="account">
-        <a href="#">Login</a>
-        <a href="#">Sign Up</a>
+        <a href="{{ url('/account') }}">LOGIN / SIGNUP</a>
     </div>
 
     <button
@@ -70,15 +69,14 @@
             Gallery
         </a>
 
-        <a href="#" class="drawer-reservation">
+        <a href="{{ url('/reservation') }}" class="drawer-reservation">
             <i class="fa-regular fa-calendar-check"></i>
             Reservation
         </a>
     </div>
 
     <div class="drawer-account">
-        <a href="#">Login</a>
-        <a href="#">Sign Up</a>
+        <a href="{{ url('/account') }}">Login / Signup</a>
     </div>
 
     <div class="drawer-footer">
