@@ -10,6 +10,12 @@ class User extends Authenticatable
 
     protected $primaryKey = 'user_id';
 
+    protected $keyType = 'int';
+
+    public $incrementing = true;
+
+    public $timestamps = true;
+
     protected $fillable = [
         'nama',
         'email',
@@ -20,6 +26,7 @@ class User extends Authenticatable
 
     protected $hidden = [
         'password',
+        'remember_token',
     ];
 
     public function reservations()

@@ -371,13 +371,26 @@
 
             <div class="form-content">
 
-                <form id="signupForm" class="auth-form active">
+                <form
+                    id="signupForm"
+                    class="auth-form  {{ session('auth_form') === 'login' ? '' : 'active' }}"
+                    action="{{ route('register.process') }}"
+                    method="POST"
+                >
+                    @csrf
 
                     <div class="form-heading">
                         <span>JOIN OUR COMMUNITY</span>
                         <h1>Create Account</h1>
                         <p>Create your Seralyn account and start your wellness journey with us.</p>
                     </div>
+                    @if ($errors->any() && session('auth_form') !== 'login')
+                        <div style="color: #b42318; font-size: 12px; margin-bottom: 15px;">
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
 
                     <div class="form-group">
                         <label for="signupName">Full Name</label>
@@ -418,7 +431,13 @@
 
                 </form>
 
-                <form id="loginForm" class="auth-form">
+                <form
+                    id="loginForm"
+                    class="auth-form {{ session('auth_form') === 'login' ? 'active' : '' }}"
+                    action="{{ route('login.process') }}"
+                    method="POST"
+                >
+                    @csrf
 
                     <div class="form-heading">
                         <span>WELCOME BACK</span>
@@ -472,15 +491,6 @@
             loginForm.classList.remove('active');
             signupForm.classList.add('active');
         }
-
-        signupForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-        });
-
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-        });
     </script>
-
 </body>
 </html>
