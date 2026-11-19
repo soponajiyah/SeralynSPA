@@ -1,4 +1,3 @@
-
 <header class="seralyn-header">
     <div class="logo">
         <a href="{{ url('/') }}">
@@ -15,7 +14,37 @@
     </nav>
 
     <div class="account">
-        <a href="{{ url('/account') }}">LOGIN / SIGNUP</a>
+        @auth
+            @if (Auth::user()->role === 'admin')
+                <a href="{{ route('admin.dashboard') }}">
+                    ADMIN DASHBOARD
+                </a>
+            @else
+                <a href="{{ route('customer.dashboard') }}" class="header-account">
+                @if (Auth::user()->foto_profil)
+
+                    <img
+                        src="{{ asset('storage/' . Auth::user()->foto_profil) }}"
+                        alt="Profile"
+                        class="header-avatar"
+                    >
+
+                @else
+
+                    <span class="header-avatar-placeholder">
+                        {{ strtoupper(substr(Auth::user()->nama, 0, 1)) }}
+                    </span>
+
+                @endif
+
+            </a>
+            @endif
+        @else
+
+            <a href="{{ route('login') }}">
+                LOGIN / SIGNUP
+            </a>
+        @endauth
     </div>
 
     <button

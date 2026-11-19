@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,6 +105,32 @@
             font-size: 10px;
             letter-spacing: 2px;
             color: #e5dfd5;
+        }
+
+        .password-field {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-field input {
+            padding-right: 65px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #947b61;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .password-toggle:hover {
+            color: #5e5040;
         }
 
         .auth-form-container {
@@ -373,7 +398,7 @@
 
                 <form
                     id="signupForm"
-                    class="auth-form  {{ session('auth_form') === 'login' ? '' : 'active' }}"
+                    class="auth-form {{ $mode === 'register' ? 'active' : '' }}"
                     action="{{ route('register.process') }}"
                     method="POST"
                 >
@@ -386,6 +411,14 @@
                     </div>
                     @if ($errors->any() && session('auth_form') !== 'login')
                         <div style="color: #b42318; font-size: 12px; margin-bottom: 15px;">
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="form-error" style="color:#b42318; font-size:12px; margin-bottom:15px;">
                             @foreach ($errors->all() as $error)
                                 <p>{{ $error }}</p>
                             @endforeach
@@ -409,12 +442,45 @@
 
                     <div class="form-group">
                         <label for="signupPassword">Password</label>
-                        <input type="password" id="signupPassword" name="password" placeholder="Create your password" minlength="8" required>
+
+                        <div class="password-field">
+                            <input
+                                type="password"
+                                id="signupPassword"
+                                name="password"
+                                placeholder="Create your password"
+                                minlength="8"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="signupPassword"
+                            >
+                                Show
+                            </button>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label for="confirmPassword">Confirm Password</label>
-                        <input type="password" id="confirmPassword" name="password_confirmation" placeholder="Confirm your password" minlength="8" required>
+                        <div class="password-field">
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="password_confirmation"
+                                placeholder="Confirm your password"
+                                minlength="8"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="confirmPassword"
+                            >
+                                Show
+                            </button>
+                        </div>
                     </div>
 
                     <div class="terms">
@@ -433,7 +499,7 @@
 
                 <form
                     id="loginForm"
-                    class="auth-form {{ session('auth_form') === 'login' ? 'active' : '' }}"
+                    class="auth-form {{ $mode === 'login' ? 'active' : '' }}"
                     action="{{ route('login.process') }}"
                     method="POST"
                 >
@@ -452,7 +518,24 @@
 
                     <div class="form-group">
                         <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required>
+
+                        <div class="password-field">
+                            <input
+                                type="password"
+                                id="loginPassword"
+                                name="password"
+                                placeholder="Enter your password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-target="loginPassword"
+                            >
+                                Show
+                            </button>
+                        </div>
                     </div>
 
                     <div class="form-options">
@@ -491,6 +574,21 @@
             loginForm.classList.remove('active');
             signupForm.classList.add('active');
         }
+
+        document.querySelectorAll('.password-toggle').forEach(button => {
+            button.addEventListener('click', function () {
+                const input = document.getElementById(
+                    this.dataset.target
+                );
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.textContent = 'Hide';
+                } else {
+                    input.type = 'password';
+                    this.textContent = 'Show';
+                }
+            });
+        });
     </script>
 </body>
 </html>
