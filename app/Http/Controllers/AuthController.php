@@ -38,9 +38,18 @@ class AuthController extends Controller
     {
         $validated = $request->validate([
             'nama' => ['required', 'string', 'max:200'],
-            'email' => ['required', 'email', 'max:100', 'unique:users,email'],
+            'email' => [
+                'required',
+                'email',
+                'max:100',
+                'unique:users,email'
+            ],
             'no_telepon' => ['required', 'string', 'max:20'],
-            'password' => ['required', 'confirmed', PasswordRule::min(8)],
+            'password' => [
+                'required',
+                'confirmed',
+                PasswordRule::min(8)
+            ],
         ]);
 
         $user = User::create([
@@ -101,7 +110,7 @@ class AuthController extends Controller
     }
 
     // ==============================
-    // FORGOT PASSWORD
+    // MENAMPILKAN FORM FORGOT PASSWORD
     // ==============================
 
     public function showForgotPassword()
@@ -115,13 +124,13 @@ class AuthController extends Controller
 
     public function sendResetLink(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'email' => ['required', 'email'],
         ]);
 
-        $status = PasswordFacade::sendResetLink(
-            $request->only('email')
-        );
+        $status = PasswordFacade::sendResetLink([
+            'email' => $validated['email'],
+        ]);
 
         if ($status === PasswordFacade::RESET_LINK_SENT) {
             return back()->with(
@@ -131,7 +140,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Email tidak ditemukan atau link gagal dikirim.',
+            'email' => __($status),
         ]);
     }
 
@@ -139,8 +148,10 @@ class AuthController extends Controller
     // MENAMPILKAN FORM RESET PASSWORD
     // ==============================
 
-    public function showResetPassword(Request $request, string $token)
-    {
+    public function showResetPassword(
+        Request $request,
+        string $token
+    ) {
         return view('auth.reset-password', [
             'token' => $token,
             'email' => $request->query('email'),
@@ -167,7 +178,8 @@ class AuthController extends Controller
             [
                 'email' => $validated['email'],
                 'password' => $validated['password'],
-                'password_confirmation' => $request->password_confirmation,
+                'password_confirmation' =>
+                    $request->password_confirmation,
                 'token' => $validated['token'],
             ],
             function ($user, $password) {
@@ -181,11 +193,14 @@ class AuthController extends Controller
         if ($status === PasswordFacade::PASSWORD_RESET) {
             return redirect()
                 ->route('login')
-                ->with('success', 'Password berhasil diubah. Silakan login.');
+                ->with(
+                    'success',
+                    'Password berhasil diubah. Silakan login.'
+                );
         }
 
         return back()->withErrors([
-            'email' => 'Link reset password tidak valid atau sudah kedaluwarsa.',
+            'email' => __($status),
         ]);
     }
 

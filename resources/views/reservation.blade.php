@@ -720,19 +720,21 @@
         </div>
 
         <div class="booking-grid">
-
             <div class="booking-panel">
-                <h3>Available Time</h3>
-                <p id="scheduleInformation">Select your preferred starting time.</p>
-                <div class="time-grid" id="timeSlots"></div>
-            </div>
 
-            <div class="booking-panel">
-                <h3>Choose Your Therapist</h3>
-                <p>Select one therapist for your entire treatment session.</p>
-                <div class="option-list" id="therapistList"></div>
-            </div>
+                <h3>Available Schedule</h3>
 
+                <p>
+                    Pilih jadwal yang tersedia sesuai tanggal dan durasi treatment.
+                </p>
+
+                <select id="scheduleSelect" class="schedule-select">
+                    <option value="">Select an available schedule</option>
+                </select>
+
+                <p id="scheduleLoading"></p>
+
+            </div>
         </div>
 
         <div class="booking-panel">
@@ -785,36 +787,30 @@
             <p>Please complete your information to proceed with your reservation.</p>
         </div>
 
-        <form id="customerForm">
+        <form
+            id="customerForm"
+            action="{{ route('reservation.store') }}"
+            method="POST"
+        >
+            @csrf
 
-            <div class="form-card">
-                <h3>Personal Information</h3>
+            <input
+                type="hidden"
+                name="treatment_names"
+                id="treatmentNamesInput"
+            >
 
-                <div class="field-group">
-                    <label for="customerName">Full Name *</label>
-                    <input type="text" id="customerName" placeholder="Enter your full name" required>
-                </div>
+            <input
+                type="hidden"
+                name="schedule_id"
+                id="scheduleIdInput"
+            >
 
-                <div class="field-group">
-                    <label for="customerPhone">Phone Number *</label>
-                    <input type="tel" id="customerPhone" placeholder="Example: 081234567890" required>
-                </div>
-
-                <div class="field-group">
-                    <label for="customerEmail">Email Address</label>
-                    <input type="email" id="customerEmail" placeholder="Enter your email address">
-                </div>
-
-                <div class="field-group">
-                    <label for="customerAddress">Address</label>
-                    <textarea id="customerAddress" rows="3" placeholder="Enter your address"></textarea>
-                </div>
-
-                <div class="field-group">
-                    <label for="customerNotes">Special Requests</label>
-                    <textarea id="customerNotes" rows="3" placeholder="Any preferences or special requests?"></textarea>
-                </div>
-            </div>
+            <input
+                type="hidden"
+                name="additional_minutes"
+                id="additionalMinutesInput"
+            >
 
             <div class="form-card">
                 <h3>Final Reservation Summary</h3>
@@ -838,7 +834,6 @@
                     CONFIRM RESERVATION <i class="fa-solid fa-check"></i>
                 </button>
             </div>
-
         </form>
 
     </section>
@@ -1019,7 +1014,9 @@
         therapist: "",
         extra: 0,
         roomType: "serenity",
-        room: ""
+        room: "",
+        scheduleId: "",
+        selectedSchedule: null,
     };
 
     const extraOptions = [
@@ -1062,7 +1059,18 @@
     }
 
     function getRoomPrice() {
-        return rooms[state.roomType].price;
+
+        if (!state.selectedSchedule) {
+            return 0;
+        }
+
+        const roomType = (
+            state.selectedSchedule.room_type || ""
+        ).toLowerCase();
+
+        return roomType.includes("harmony")
+            ? 60000
+            : 45000;
     }
 
     function getTotalPrice() {
@@ -1199,18 +1207,66 @@
         showStep(3);
     }
 
-    function renderSchedule() {
-        const duration = getDuration();
+    function renderScheduleSummary() {
 
-        document.getElementById("scheduleInformation").textContent =
-            `Total treatment duration: ${duration} minutes. Operating hours: 09:00–21:00.`;
+        const container = document.getElementById("scheduleSummary");
 
-        renderTimeSlots();
-        renderTherapists();
-        renderExtraTime();
-        renderRooms();
-        renderScheduleSummary();
+        const schedule = state.selectedSchedule;
+
+        if (!schedule) {
+            container.innerHTML = `
+                <p>Please select an available schedule.</p>
+            `;
+
+            document.getElementById("scheduleTotal").textContent =
+                formatPrice(getTotalPrice());
+
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="summary-row">
+                <span>Date</span>
+                <strong>${schedule.tanggal}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Time</span>
+                <strong>
+                    ${schedule.jam_mulai} - ${schedule.jam_selesai}
+                </strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Therapist</span>
+                <strong>${schedule.therapist}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Room</span>
+                <strong>${schedule.room}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Treatment Subtotal</span>
+                <strong>${formatPrice(getTreatmentPrice())}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Additional Time</span>
+                <strong>${formatPrice(state.extra / 10 * 20000)}</strong>
+            </div>
+
+            <div class="summary-row">
+                <span>Room Fee</span>
+                <strong>${formatPrice(getRoomPrice())}</strong>
+            </div>
+        `;
+
+        document.getElementById("scheduleTotal").textContent =
+            formatPrice(getTotalPrice());
     }
+
 
     function renderTimeSlots() {
         const container = document.getElementById("timeSlots");
@@ -1319,129 +1375,188 @@
 
         return `${String(Math.floor(end / 60)).padStart(2, "0")}:${String(end % 60).padStart(2, "0")}`;
     }
+        
+    async function renderSchedule() {
 
-    function renderScheduleSummary() {
-        const container = document.getElementById("scheduleSummary");
+        const duration = getTotalDuration();
 
-        container.innerHTML = `
-            <div class="summary-row">
-                <span>Date</span>
-                <strong>${state.date}</strong>
-            </div>
-            <div class="summary-row">
-                <span>Starting Time</span>
-                <strong>${state.time || 'Not selected'}</strong>
-            </div>
-            <div class="summary-row">
-                <span>Estimated End Time</span>
-                <strong>${getEndTime()}</strong>
-            </div>
-            <div class="summary-row">
-                <span>Total Duration</span>
-                <strong>${getTotalDuration()} minutes</strong>
-            </div>
-            <div class="summary-row">
-                <span>Therapist</span>
-                <strong>${state.therapist || 'Not selected'}</strong>
-            </div>
-            <div class="summary-row">
-                <span>Room</span>
-                <strong>${state.room || 'Not selected'}</strong>
-            </div>
-            <div class="summary-row">
-                <span>Treatment Subtotal</span>
-                <strong>${formatPrice(getTreatmentPrice())}</strong>
-            </div>
-            <div class="summary-row">
-                <span>Additional Time</span>
-                <strong>${formatPrice(state.extra / 10 * 20000)}</strong>
-            </div>
-            <div class="summary-row">
-                <span>Room Fee</span>
-                <strong>${formatPrice(getRoomPrice())}</strong>
-            </div>
+        const select = document.getElementById("scheduleSelect");
+        const loading = document.getElementById("scheduleLoading");
+
+        select.innerHTML = `
+            <option value="">Loading available schedules...</option>
         `;
 
-        document.getElementById("scheduleTotal").textContent = formatPrice(getTotalPrice());
+        loading.textContent = "Checking schedule availability...";
+
+        try {
+
+            const response = await fetch(
+                `/reservation/available-schedules?tanggal=${encodeURIComponent(state.date)}&durasi=${duration}`
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to load schedules.");
+            }
+
+            const schedules = await response.json();
+
+            select.innerHTML = `
+                <option value="">Select an available schedule</option>
+            `;
+
+            schedules.forEach(schedule => {
+
+                const option = document.createElement("option");
+
+                option.value = schedule.schedule_id;
+
+                option.textContent =
+                    `${schedule.jam_mulai} - ${schedule.jam_selesai} | ` +
+                    `${schedule.therapist} | ${schedule.room}`;
+
+                option.dataset.schedule = JSON.stringify(schedule);
+
+                select.appendChild(option);
+
+            });
+
+            loading.textContent = schedules.length
+                ? `${schedules.length} available schedules found.`
+                : "No available schedules for this date and duration.";
+
+        } catch (error) {
+
+            select.innerHTML = `
+                <option value="">Unable to load schedules</option>
+            `;
+
+            loading.textContent = error.message;
+
+        }
+
+        select.onchange = function () {
+
+            const selectedOption = this.options[this.selectedIndex];
+
+            state.scheduleId = this.value;
+
+            state.selectedSchedule = this.value
+                ? JSON.parse(selectedOption.dataset.schedule)
+                : null;
+
+            renderScheduleSummary();
+
+        };
+
+        renderScheduleSummary();
     }
 
     function goToDetails() {
-        if (!state.time) {
-            alert("Please select your appointment time.");
-            return;
-        }
 
-        if (!state.therapist) {
-            alert("Please select your therapist.");
-            return;
-        }
-
-        if (!state.room) {
-            alert("Please select your treatment room.");
+        if (!state.scheduleId || !state.selectedSchedule) {
+            alert("Please select an available schedule.");
             return;
         }
 
         renderFinalSummary();
+
         showStep(4);
     }
 
+
     function renderFinalSummary() {
+
         const container = document.getElementById("finalSummary");
+
+        const schedule = state.selectedSchedule;
 
         container.innerHTML = `
             <div class="summary-row">
                 <span>Treatments</span>
                 <strong>${state.selected.length} Selected</strong>
             </div>
+
             ${state.selected.map(item => `
                 <div class="summary-row">
                     <span>${item.name}</span>
                     <strong>${formatPrice(item.price)}</strong>
                 </div>
             `).join("")}
+
             <div class="summary-row">
                 <span>Date</span>
-                <strong>${state.date}</strong>
+                <strong>${schedule.tanggal}</strong>
             </div>
+
             <div class="summary-row">
                 <span>Appointment</span>
-                <strong>${state.time} - ${getEndTime()}</strong>
+                <strong>
+                    ${schedule.jam_mulai} - ${schedule.jam_selesai}
+                </strong>
             </div>
+
             <div class="summary-row">
                 <span>Therapist</span>
-                <strong>${state.therapist}</strong>
+                <strong>${schedule.therapist}</strong>
             </div>
+
             <div class="summary-row">
                 <span>Room</span>
-                <strong>${state.room}</strong>
+                <strong>${schedule.room}</strong>
             </div>
+
             <div class="summary-row">
                 <span>Additional Time</span>
                 <strong>${state.extra} minutes</strong>
             </div>
+
             <div class="summary-row">
                 <span>Room Fee</span>
                 <strong>${formatPrice(getRoomPrice())}</strong>
             </div>
         `;
 
-        document.getElementById("finalTotal").textContent = formatPrice(getTotalPrice());
+        document.getElementById("finalTotal").textContent =
+            formatPrice(getTotalPrice());
     }
 
+
     document.getElementById("customerForm").addEventListener("submit", function(event) {
+
         event.preventDefault();
 
-        if (!this.reportValidity()) return;
+        if (!this.reportValidity()) {
+            return;
+        }
 
-        alert(
-            "Reservation form completed!\n\n" +
-            "Name: " + document.getElementById("customerName").value +
-            "\nDate: " + state.date +
-            "\nTime: " + state.time +
-            "\nTotal: " + formatPrice(getTotalPrice()) +
-            "\n\nThis is a frontend prototype. Your reservation has not been saved to the database yet."
-        );
+        if (!state.scheduleId) {
+            alert("Please select an available schedule.");
+            showStep(3);
+            return;
+        }
+
+        if (state.selected.length === 0) {
+            alert("Please select at least one treatment.");
+            showStep(1);
+            return;
+        }
+
+        document.getElementById("treatmentNamesInput").value =
+            JSON.stringify(
+                state.selected.map(item => item.name)
+            );
+
+        document.getElementById("scheduleIdInput").value =
+            state.scheduleId;
+
+        document.getElementById("additionalMinutesInput").value =
+            state.extra;
+
+        HTMLFormElement.prototype.submit.call(this);
+
     });
+
 
     const today = new Date();
     const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000)

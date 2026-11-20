@@ -18,6 +18,8 @@ class Reservation extends Model
         'status_reservasi',
         'catatan',
         'alasan_penolakan',
+        'additional_minutes',
+        'room_fee',
     ];
 
     public function user()

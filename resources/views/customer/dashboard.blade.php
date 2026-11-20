@@ -581,11 +581,133 @@
                     </form>
                 </section>
 
+                <section class="content-card">
+
+                    <h2 class="section-title">Upcoming Reservations</h2>
+
+                    @forelse ($reservasiMendatang as $reservation)
+
+                        <article class="booking-card">
+
+                            <div class="booking-top">
+                                <div>
+                                    <span class="booking-code">
+                                        {{ $reservation->kode_reservasi }}
+                                    </span>
+
+                                    <h3>
+                                        @foreach ($reservation->items as $item)
+                                            {{ $item->treatment?->nama_treatment }}
+                                            @if (!$loop->last), @endif
+                                        @endforeach
+                                    </h3>
+                                </div>
+
+                                <span class="booking-status">
+                                    {{ ucfirst(str_replace('_', ' ', $reservation->status_reservasi)) }}
+                                </span>
+                            </div>
+
+                            <div class="booking-info">
+
+                                <p>
+                                    Date:
+                                    {{ $reservation->schedule?->tanggal ?? '-' }}
+                                </p>
+
+                                <p>
+                                    Time:
+                                    {{ $reservation->schedule?->jam_mulai ?? '-' }}
+                                    -
+                                    {{ $reservation->schedule?->jam_selesai ?? '-' }}
+                                </p>
+
+                                <p>
+                                    Therapist:
+                                    {{ $reservation->schedule?->therapist?->nama_terapis ?? '-' }}
+                                </p>
+
+                                <p>
+                                    Room:
+                                    {{ $reservation->schedule?->room?->nomor_kamar ?? '-' }}
+                                </p>
+
+                                <p>
+                                    Total:
+                                    Rp{{ number_format($reservation->total_harga, 0, ',', '.') }}
+                                </p>
+
+                                <p>
+                                    DP:
+                                    Rp{{ number_format($reservation->payment?->dp_amount ?? 0, 0, ',', '.') }}
+                                </p>
+
+                            </div>
+
+                            @if ($reservation->status_reservasi === 'awaiting_payment')
+
+                                <form
+                                    action="{{ route('customer.payment.upload', $reservation->reservation_id) }}"
+                                    method="POST"
+                                    enctype="multipart/form-data"
+                                >
+                                    @csrf
+
+                                    <label>Upload Payment Proof</label>
+
+                                    <input
+                                        type="file"
+                                        name="proof_image"
+                                        accept="image/jpeg,image/png,image/webp"
+                                        required
+                                    >
+
+                                    <button type="submit" class="save-profile-btn">
+                                        Upload Payment
+                                    </button>
+                                </form>
+
+                            @endif
+
+                            @if (in_array($reservation->status_reservasi, [
+                                'awaiting_payment',
+                                'pending_verification',
+                                'confirmed',
+                            ]))
+
+                                <form
+                                    action="{{ route('customer.reservation.cancel', $reservation->reservation_id) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Yakin ingin membatalkan reservasi ini?')"
+                                >
+                                    @csrf
+                                    @method('PATCH')
+
+                                    <button type="submit" class="save-profile-btn">
+                                        Cancel Reservation
+                                    </button>
+                                </form>
+
+                            @endif
+
+                        </article>
+
+                    @empty
+
+                        <div class="empty-history">
+                            <p>You don't have any upcoming reservations.</p>
+                        </div>
+
+                    @endforelse
+
+                </section>
+
+
                 <section class="content-card history-section">
 
                     <h2 class="section-title">Booking History</h2>
 
-                    @forelse ($reservations as $reservation)
+                    @forelse ($riwayatSelesai as $reservation)
 
                         <article class="booking-card">
 

@@ -3,9 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
-use App\Models\User;
-use App\Models\Reservation;
-
+use App\Http\Controllers\AdminReservationController;
+use App\Http\Controllers\ReservationController;
 
 Route::get('/', function () {
     return view('index');
@@ -36,6 +35,8 @@ Route::get('/account', function () {
 });
 
 
+// AUTHENTICATION
+
 Route::middleware('guest')->group(function () {
 
     Route::get('/login', [AuthController::class, 'showLogin'])
@@ -57,7 +58,7 @@ Route::middleware('guest')->group(function () {
 
     Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])
         ->name('password.email');
-        
+
     Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])
         ->name('password.reset');
 
@@ -66,9 +67,16 @@ Route::middleware('guest')->group(function () {
 
 });
 
-// ==============================
+
+// AVAILABLE SCHEDULE
+
+Route::get(
+    '/reservation/available-schedules',
+    [ReservationController::class, 'availableSchedules']
+)->name('reservation.available');
+
+
 // CUSTOMER
-// ==============================
 
 Route::middleware(['auth', 'role:customer'])
     ->prefix('customer')
@@ -81,55 +89,70 @@ Route::middleware(['auth', 'role:customer'])
         Route::put('/profile', [CustomerController::class, 'updateProfile'])
             ->name('profile.update');
 
+        Route::post(
+            '/reservation/{reservation}/payment',
+            [CustomerController::class, 'uploadPaymentProof']
+        )->name('payment.upload');
+
+        Route::patch(
+            '/reservation/{reservation}/cancel',
+            [CustomerController::class, 'cancelReservation']
+        )->name('reservation.cancel');
+
+        Route::post(
+            '/reservation',
+            [ReservationController::class, 'store']
+        )->name('reservation.store');
+
     });
 
+
+// ADMIN
 
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
 
-        Route::get('/dashboard', function () {
+        Route::get(
+            '/dashboard',
+            [AdminReservationController::class, 'dashboard']
+        )->name('dashboard');
 
-            $totalCustomer = User::where('role', 'customer')->count();
+        Route::get(
+            '/reservation/{reservation}',
+            [AdminReservationController::class, 'show']
+        )->name('reservation.show');
 
-            $totalReservasi = Reservation::count();
+        Route::patch(
+            '/reservation/{reservation}/verify',
+            [AdminReservationController::class, 'verifyPayment']
+        )->name('reservation.verify');
 
-            $reservasiPending = Reservation::whereIn(
-                'status_reservasi',
-                ['awaiting_payment', 'pending_verification']
-            )->count();
+        Route::patch(
+            '/reservation/{reservation}/checkin',
+            [AdminReservationController::class, 'checkIn']
+        )->name('reservation.checkin');
 
-            $reservasiSelesai = Reservation::where(
-                'status_reservasi',
-                'completed'
-            )->count();
+        Route::patch(
+            '/reservation/{reservation}/checkout',
+            [AdminReservationController::class, 'checkout']
+        )->name('reservation.checkout');
 
-            $reservasiTerbaru = Reservation::with([
-                'user',
-                'schedule.therapist',
-                'schedule.room',
-                'items.treatment',
-            ])
-                ->latest()
-                ->take(8)
-                ->get();
+        Route::patch(
+            '/reservation/{reservation}/reject',
+            [AdminReservationController::class, 'reject']
+        )->name('reservation.reject');
 
-            return view('admin.dashboard', compact(
-                'totalCustomer',
-                'totalReservasi',
-                'reservasiPending',
-                'reservasiSelesai',
-                'reservasiTerbaru'
-            ));
-
-        })->name('dashboard');
+        Route::get(
+            '/schedule',
+            [AdminReservationController::class, 'schedule']
+        )->name('schedule');
 
     });
 
-// ==============================
+
 // LOGOUT
-// ==============================
 
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
